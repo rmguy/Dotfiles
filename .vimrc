@@ -7,7 +7,7 @@ syntax on
 filetype plugin indent on
 
 if &diff
-        colorscheme diffscheme
+    colorscheme diffscheme
 endif
 
 let mapleader=","   " leader is comma

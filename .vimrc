@@ -7,18 +7,18 @@ syntax on
 filetype plugin indent on
 
 if &diff
-        colorscheme diffscheme
+    colorscheme diffscheme
 endif
 
-let mapleader=","   " leader is comma
-syntax enable       " enable syntax processing
-set tabstop=4       " number of visual spaces per TAB
-set softtabstop=4   " number of spaces in tab when editing
-set expandtab       " tabs are spaces
+let mapleader=","       " leader is comma
+syntax enable           " enable syntax processing
+set tabstop=4           " number of visual spaces per TAB
+set softtabstop=4       " number of spaces in tab when editing
+set expandtab           " tabs are spaces
 set showcmd             " show command in bottom bar
 filetype indent on      " load filetype-specific indent files (~/.vim/indent/python.vim)
 set wildmenu            " visual autocomplete for command menu
-" set lazyredraw          " redraw only when we need to.
+" set lazyredraw        " redraw only when we need to.
 set showmatch           " highlight matching [{()}]
 set incsearch           " search as characters are entered
 set hlsearch            " highlight matches

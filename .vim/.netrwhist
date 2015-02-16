@@ -1,8 +1,0 @@
-let g:netrw_dirhistmax  =10
-let g:netrw_dirhist_cnt =6
-let g:netrw_dirhist_1='/usr/local/google/home/beeps/goproj/src/github.com/google/cadvisor/client'
-let g:netrw_dirhist_2='/usr/local/google/home/beeps/goproj/src/github.com/google/cadvisor/container'
-let g:netrw_dirhist_3='/usr/local/google/home/beeps/goproj/src/github.com/google/cadvisor'
-let g:netrw_dirhist_4='/usr/local/google/home/beeps/goproj/src/github.com/google/cadvisor/info'
-let g:netrw_dirhist_5='/usr/local/google/home/beeps/goproj/src/github.com/GoogleCloudPlatform/kubernetes/pkg/apiserver'
-let g:netrw_dirhist_6='/usr/local/google/home/beeps/goproj/src/github.com/prometheus/procfs'

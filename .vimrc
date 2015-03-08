@@ -7,31 +7,32 @@ syntax on
 filetype plugin indent on
 
 if &diff
-    colorscheme diffscheme
+        colorscheme diffscheme
 endif
 
 let mapleader=","       " leader is comma
 syntax enable           " enable syntax processing
-set tabstop=4           " number of visual spaces per TAB
-set softtabstop=4       " number of spaces in tab when editing
-set expandtab           " tabs are spaces
+set tabstop=4       " number of visual spaces per TAB
+set softtabstop=4   " number of spaces in tab when editing
+set expandtab       " tabs are spaces
 set showcmd             " show command in bottom bar
 filetype indent on      " load filetype-specific indent files (~/.vim/indent/python.vim)
 set wildmenu            " visual autocomplete for command menu
-" set lazyredraw        " redraw only when we need to.
+" set lazyredraw          " redraw only when we need to.
 set showmatch           " highlight matching [{()}]
 set incsearch           " search as characters are entered
 set hlsearch            " highlight matches
+" turn off search highlight ,<space>
+nnoremap <leader><space> :nohlsearch<CR>
 set foldenable          " enable folding
 set foldlevelstart=10   " open most folds by default
 set foldnestmax=10      " 10 nested fold max
 set foldmethod=indent   " fold based on indent level
-set cursorline          " nice highlight for current line
+set pastetoggle=<F2>    " toggle paste mode with F2
+
+set cursorline
 hi CursorLine term=bold cterm=bold guibg=Grey40
 set number
-
-" turn off search highlight ,<space>
-nnoremap <leader><space> :nohlsearch<CR>
 
 " move to beginning/end of line, TODO
 nnoremap B ^
@@ -58,7 +59,7 @@ map <C-n> :NERDTreeToggle<CR>
 " Close if only nerdtree open
 autocmd bufenter * if (winnr("$") == 1 && exists("b:NERDTreeType") && b:NERDTreeType == "primary") | q | endif
 
-" basic vim close/open mappings
+
 nnoremap <silent> <C-Right> <c-w>l
 nnoremap <silent> <C-Left> <c-w>h
 nnoremap <silent> <C-Up> <c-w>k
@@ -68,6 +69,8 @@ imap <c-g> <Esc>:wqa!<CR>
 imap <c-g> <Esc><c-g>
 nmap <leader>c :q!<CR>
 imap <leader>c <Esc>:q!<CR>
+nmap <leader>w :w<CR>
+imap <leader>w <Esc>:w<CR>
 autocmd BufWritePre * :%s/\s\+$//e
 
 " golang
@@ -75,17 +78,29 @@ au Filetype go nnoremap <leader>v :vsp <CR>:exe "GoDef" <CR>
 au Filetype go nnoremap <leader>s :sp <CR>:exe "GoDef"<CR>
 au Filetype go nnoremap <leader>t :tab split <CR>:exe "GoDef"<CR>
 au Filetype go nnoremap <leader><ENTER> :exe "GoDef"<CR>
-nmap <leader>m :Tabmerge<CR>
+nmap <leader>m :Tabmerge<C-R><CR>
 " au FileType go au BufWritePre <buffer> Fmt
+
 
 " Ctrlp settings
 let g:ctrlp_map = '<c-p>'
 let g:ctrlp_cmd = 'CtrlP'
 set wildignore+=*/tmp/*,*.so,*.swp,*.zip,*/results/*.*/logs/*,*/bin/*
 
+
 " vim-go
 let g:go_auto_type_info = 1
 let g:go_highlight_structs = 1
+" format with goimports instead of gofmt
+" let g:go_fmt_command = "goimports"
+" oracle setup
+let g:go_oracle_scope='github.com/GoogleCloudPlatform/kubernetes/cmd/kubelet github.com/GoogleCloudPlatform/kubernetes/cmd/kube-apiserver github.com/GoogleCloudPlatform/kubernetes/cmd/kube-controller-manager github.com/GoogleCloudPlatform/kubernetes/cmd/kube-proxy github.com/GoogleCloudPlatform/kubernetes/cmd/kubectl github.com/GoogleCloudPlatform/kubernetes/cmd/kubernetes'
+nmap <leader>i :GoImplements <CR>
+nmap <leader>d :GoDescribe <CR>
+nmap <leader>calls :GoCallers <CR>
+nmap <leader>in :GoCallees <CR>
+nmap <leader>where :GoCallstack <CR>
+
 
 " Tagbar
 nmap tt :TagbarToggle<CR>
@@ -118,3 +133,18 @@ let g:tagbar_type_go = {
     \ 'ctagsbin'  : 'gotags',
     \ 'ctagsargs' : '-sort -silent'
 \ }
+
+" Gitgutter settings
+highlight clear SignColumn
+hi GitGutterAddLine guibg=green
+hi GitGutterChangeLine guibg=green
+hi GitGutterDeleteLine guibg=green
+hi GitGutterAdd guibg=red guifg=green
+hi GitGutterChange guibg=red guifg=green
+hi GitGutterDelete guibg=red guifg=green
+let g:gitgutter_diff_args = 'master'
+
+" Note: non eager diffing messes up hunk navigation
+let g:gitgutter_realtime = 1
+let g:gitgutter_eager = 1
+" nmap <leader> <Plug>GitGutterNextHunk

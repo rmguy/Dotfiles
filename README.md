@@ -9,4 +9,4 @@ of the box (godeps need installation, ycm needs building etc).
 * Document installation procedure for go packages.
 * Remove unwanted bundles.
 
-This is a fake commit, to test stacked patches
+This is a fake commit, to test stacked patches: I need the first line to do this.

@@ -1,0 +1,8 @@
+let g:netrw_dirhistmax  =10
+let g:netrw_dirhist_cnt =6
+let g:netrw_dirhist_1='/home/beeps/goproj/src/k8s.io'
+let g:netrw_dirhist_2='/home/beeps/goproj/src/k8s.io/contrib'
+let g:netrw_dirhist_3='/home/beeps/goproj/src/k8s.io/contrib/ingress'
+let g:netrw_dirhist_4='/home/beeps/goproj/src/k8s.io/contrib/ingress/echoheaders'
+let g:netrw_dirhist_5='/home/beeps/goproj/src/k8s.io/kubernetes/pkg/proxy'
+let g:netrw_dirhist_6='/home/beeps/goproj/src/k8s.io/kubernetes/pkg/proxy/iptables'

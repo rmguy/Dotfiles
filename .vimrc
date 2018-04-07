@@ -4,11 +4,18 @@ filetype off                  " required
 execute pathogen#infect()
 set sessionoptions-=options
 syntax on
+
+" Needs TERM exported to 256 colors
+colorscheme heroku-terminal
 filetype plugin indent on
+filetype plugin on
 
 if &diff
         colorscheme diffscheme
 endif
+
+" Scrolling
+set mouse+=a
 
 let mapleader=","       " leader is comma
 syntax enable           " enable syntax processing
@@ -18,7 +25,7 @@ set expandtab       " tabs are spaces
 set showcmd             " show command in bottom bar
 filetype indent on      " load filetype-specific indent files (~/.vim/indent/python.vim)
 set wildmenu            " visual autocomplete for command menu
-" set lazyredraw          " redraw only when we need to.
+set lazyredraw          " redraw only when we need to.
 set showmatch           " highlight matching [{()}]
 set incsearch           " search as characters are entered
 set hlsearch            " highlight matches
@@ -30,6 +37,7 @@ set foldnestmax=10      " 10 nested fold max
 set foldmethod=indent   " fold based on indent level
 set pastetoggle=<F2>    " toggle paste mode with F2
 
+" highlight cursor line
 set cursorline
 hi CursorLine term=bold cterm=bold guibg=Grey40
 set number
@@ -55,22 +63,27 @@ endif
 noremap <leader>g :Ag <C-R><C-W>
 
 " Ctrl n for nerdtree
-map <C-n> :NERDTreeToggle<CR>
+" map <C-n> :NERDTreeToggle<CR>
 " Close if only nerdtree open
-autocmd bufenter * if (winnr("$") == 1 && exists("b:NERDTreeType") && b:NERDTreeType == "primary") | q | endif
-
+" autocmd bufenter * if (winnr("$") == 1 && exists("b:NERDTreeType") && b:NERDTreeType == "primary") | q | endif
 
 nnoremap <silent> <C-Right> <c-w>l
 nnoremap <silent> <C-Left> <c-w>h
 nnoremap <silent> <C-Up> <c-w>k
 nnoremap <silent> <C-Down> <c-w>j
+"map <C-j> <C-w>j
+"map <C-k> <C-w>k
+"map <C-h> <C-w>h
+"map <C-l> <C-w>l
+
 nmap <c-g> :wqa!<CR>
 imap <c-g> <Esc>:wqa!<CR>
-imap <c-g> <Esc><c-g>
-nmap <leader>c :q!<CR>
-imap <leader>c <Esc>:q!<CR>
-nmap <leader>w :w<CR>
-imap <leader>w <Esc>:w<CR>
+nmap <c-c> :q!<CR>
+imap <c-c> <Esc>:q!<CR>
+" nmap <leader>c :q!<CR>
+" imap <leader>c <Esc>:q!<CR>
+nmap <c-w> :w<CR>
+imap <c-w> <Esc>:w<CR>
 autocmd BufWritePre * :%s/\s\+$//e
 
 " golang
@@ -81,6 +94,11 @@ au Filetype go nnoremap <leader><ENTER> :exe "GoDef"<CR>
 nmap <leader>m :Tabmerge<C-R><CR>
 " au FileType go au BufWritePre <buffer> Fmt
 
+" nginx
+au BufRead,BufNewFile *.nginx set ft=nginx
+au BufRead,BufNewFile nginx.conf set ft=nginx
+au BufRead,BufNewFile *nginx.conf set ft=nginx
+au BufRead,BufNewFile /etc/nginx/*,/usr/local/nginx/conf/* setfiletype nginx
 
 " Ctrlp settings
 let g:ctrlp_map = '<c-p>'
@@ -89,8 +107,8 @@ set wildignore+=*/tmp/*,*.so,*.swp,*.zip,*/results/*.*/logs/*,*/bin/*
 
 
 " vim-go
-let g:go_auto_type_info = 1
-let g:go_highlight_structs = 1
+let g:go_auto_type_info = 0
+let g:go_highlight_structs = 0
 " format with goimports instead of gofmt
 " let g:go_fmt_command = "goimports"
 " oracle setup
@@ -100,39 +118,40 @@ nmap <leader>d :GoDescribe <CR>
 nmap <leader>calls :GoCallers <CR>
 nmap <leader>in :GoCallees <CR>
 nmap <leader>where :GoCallstack <CR>
+nmap <leader>peers :GoChannelPeers <CR>
 
 
 " Tagbar
 nmap tt :TagbarToggle<CR>
 
 " Gotags settings
-let g:tagbar_type_go = {
-    \ 'ctagstype' : 'go',
-    \ 'kinds'     : [
-        \ 'p:package',
-        \ 'i:imports:1',
-        \ 'c:constants',
-        \ 'v:variables',
-        \ 't:types',
-        \ 'n:interfaces',
-        \ 'w:fields',
-        \ 'e:embedded',
-        \ 'm:methods',
-        \ 'r:constructor',
-        \ 'f:functions'
-    \ ],
-    \ 'sro' : '.',
-    \ 'kind2scope' : {
-        \ 't' : 'ctype',
-        \ 'n' : 'ntype'
-    \ },
-    \ 'scope2kind' : {
-        \ 'ctype' : 't',
-        \ 'ntype' : 'n'
-    \ },
-    \ 'ctagsbin'  : 'gotags',
-    \ 'ctagsargs' : '-sort -silent'
-\ }
+"let g:tagbar_type_go = {
+"    \ 'ctagstype' : 'go',
+"    \ 'kinds'     : [
+"        \ 'p:package',
+"        \ 'i:imports:1',
+"        \ 'c:constants',
+"        \ 'v:variables',
+"        \ 't:types',
+"        \ 'n:interfaces',
+"        \ 'w:fields',
+"        \ 'e:embedded',
+"        \ 'm:methods',
+"        \ 'r:constructor',
+"        \ 'f:functions'
+"    \ ],
+"    \ 'sro' : '.',
+"    \ 'kind2scope' : {
+"        \ 't' : 'ctype',
+"        \ 'n' : 'ntype'
+"    \ },
+"    \ 'scope2kind' : {
+"        \ 'ctype' : 't',
+"        \ 'ntype' : 'n'
+"    \ },
+"    \ 'ctagsbin'  : 'gotags',
+"    \ 'ctagsargs' : '-sort -silent'
+"\ }
 
 " Gitgutter settings
 highlight clear SignColumn
@@ -145,6 +164,6 @@ hi GitGutterDelete guibg=red guifg=green
 let g:gitgutter_diff_args = 'master'
 
 " Note: non eager diffing messes up hunk navigation
-let g:gitgutter_realtime = 1
-let g:gitgutter_eager = 1
+let g:gitgutter_realtime = 0
+let g:gitgutter_eager = 0
 " nmap <leader> <Plug>GitGutterNextHunk
